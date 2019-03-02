@@ -1,0 +1,29 @@
+<%- include("header", {title: title}); %>
+
+
+<h1>Edit an account</h1>
+<p>Edit account <%= account %></p>
+
+<% res = res[0] %>
+<form method="post" action="/bank/edit">
+    <!-- <fieldset> -->
+        <!-- <legend>Create account</legend> -->
+
+        <!-- <label for "id">Id:</label> -->
+        <input id="id" type="text" name="id" readonly value="<%= res.id %>">
+<br>
+        <!-- <label for "name">Name:</label> -->
+        <input id="name" type="text" name="name" value="<%= res.name %>">
+<br>
+        <!-- <label for "balance">Balance:</label> -->
+        <input id="balance" type="number" name="balance" value="<%= res.balance %>">
+<br>
+        <input type="submit" name="doit" value="Edit">
+    <!-- </fieldset> -->
+</form>
+<p>
+<a href="/bank/balance/">Tillbaka</a>
+</p>
+
+
+<%- include("footer"); %>

@@ -1,0 +1,8 @@
+{
+    "host":     "localhost",
+    "user":     "user",
+    "password": "pass",
+    "database": "eshop",
+    "dateStrings": "date",
+    "multipleStatements": true
+}

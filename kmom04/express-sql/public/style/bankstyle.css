@@ -1,0 +1,74 @@
+
+@import url('https://fonts.googleapis.com/css?family=Merriweather:300|Montserrat');
+
+
+html {
+    /* background: fixed no-repeat url("../img/skog.png");
+    background-size: cover; */
+    background-color: rgba(300, 300, 300, 1);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 100%;
+    line-height: 1.5;
+    overflow-y: scroll;
+}
+
+body {
+    margin: 8px auto;
+    padding: 8px;
+    width: 800px;
+    overflow: auto;
+}
+
+nav {
+    background-color: rgba(200, 200, 0, 0.5);
+    min-height: 3rem;
+}
+
+p#message {
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Merriweather', serif;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: rgba(200, 200, 0, 0.5);
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+.right {
+    text-align: right;
+}
+
+a {
+    /* text-decoration: none; */
+    color: #000;
+}
+
+footer {
+    clear: both;
+    text-align: center;
+    background-color: rgba(200, 200, 0, 0.5);
+    min-height: 3rem;
+}
+
+.bild {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.omLink,
+footer {
+    /* text-decoration: underline; */
+}
