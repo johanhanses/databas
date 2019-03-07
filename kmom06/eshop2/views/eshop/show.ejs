@@ -1,0 +1,55 @@
+<%- include("header", {title: title}); %>
+
+
+<h1>Detaljer för order id: <%= orderNo %></h1>
+
+<pre><%#= JSON.stringify(res, null, 4) %></pre>
+
+<div>
+    <h3>Kund:</h3>
+    <%= res[0].first_name + " " + res[0].last_name %><br>
+    <%= res[0].address %><br>
+    <%= res[0].city %><br>
+    <%= res[0].country %><br>
+    <%= res[0].phone %><br>
+</div>
+
+<h3>Order</h3>
+<table align="center">
+    <tr>
+        <th>antal</th><th>artikel_nummer</th><th>artikel</th><th>pris/st.</th><th>tot_pris</th><!--<th>action</th>-->
+    </tr>
+<% for (const row of res) { %>
+    <tr>
+        <td><%= row.items %></td>
+        <td><%= row.product %></td>
+        <td class="left"><%= row.article %></td>
+        <td class="left"><%= row.price %></td>
+        <td class="left"><%= row.items * row.price %></td>
+
+
+
+
+        <!--<td><a href="/eshop/edit/<%= row.id %>">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <a href="/eshop/delete/<%= row.id %>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+        </td>-->
+    </tr>
+<% }; %>
+</table>
+
+
+<p>
+    <a href="/eshop/createrow/<%= res[0].order_id %>">Lägg till produkter till order</a>
+</p>
+<form method="post" action="/eshop/show/">
+    <input type="hidden" name="id" value="<%= orderNo %>">
+    <input type="submit" value="Beställ">
+</form>
+
+
+<p>
+    <a href="/eshop/order/">Tillbaka</a>
+</p>
+
+<%- include("footer"); %>

@@ -61,6 +61,11 @@ CREATE TABLE `customer`
     `id` INT NOT NULL,
     `first_name` CHAR(20),
     `last_name` CHAR(20),
+    `address` VARCHAR(20),
+    `zip_code` VARCHAR(8),
+    `city` VARCHAR(20),
+    `country` VARCHAR(20),
+    `phone` VARCHAR(20),
 
     PRIMARY KEY (`id`)
 )
@@ -72,8 +77,14 @@ COLLATE utf8_swedish_ci;
 -- create order tables
 CREATE TABLE `order`
 (
-    `id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `customer_id` INT,
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    `deleted` TIMESTAMP DEFAULT NULL,
+    `ordered` TIMESTAMP DEFAULT NULL,
+    `shiped` TIMESTAMP DEFAULT NULL,
+
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`)
@@ -84,14 +95,14 @@ COLLATE utf8_swedish_ci;
 
 CREATE TABLE `order_row`
 (
-    `id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `order` INT,
     `product` INT,
     `items` INT,
 
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`order`) REFERENCES `order`(`id`),
-    FOREIGN KEY (`product`) REFERENCES `product`(`id`)
+    PRIMARY KEY (`id`)
+    -- FOREIGN KEY (`order`) REFERENCES `order`(`id`),
+    -- FOREIGN KEY (`product`) REFERENCES `product`(`id`)
 )
 ENGINE INNODB
 CHARSET utf8
@@ -133,7 +144,7 @@ COLLATE utf8_swedish_ci;
 -- create Warehouse tables
 CREATE TABLE `warehouse_shelf`
 (
-    `shelf_id` INT NOT NULL,
+    `shelf_id` INT NOT NULL AUTO_INCREMENT,
     `description` VARCHAR(45),
 
     PRIMARY KEY (`shelf_id`)
@@ -144,7 +155,7 @@ COLLATE utf8_swedish_ci;
 
 CREATE TABLE `warehouse`
 (
-    `id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `product_id` INT,
     `shelf_id` INT,
     `items` INT,
@@ -249,5 +260,7 @@ FROM `order` AS `o`
         ON `p`.`id` = `w`.`product_id`
     INNER JOIN `warehouse_shelf` AS `ws`
         ON `w`.`shelf_id` = `ws`.`shelf_id`
-GROUP BY `order_row`
+GROUP BY `order_row`, `ws`.`shelf_id`, `w`.`items`
 ;
+
+SELECT * FROM Vpick_list;

@@ -6,7 +6,7 @@
 module.exports = {
     showCategory: showCategory,
     showProduct: showProduct,
-    showProductonly: showProductonly,
+    showProductOnly: showProductOnly,
     showAProduct: showAProduct,
     createProduct: createProduct,
     editProduct: editProduct,
@@ -16,7 +16,14 @@ module.exports = {
     showInventory: showInventory,
     searchInventory: searchInventory,
     addToShelf: addToShelf,
-    removeFromShelf: removeFromShelf
+    removeFromShelf: removeFromShelf,
+    showCustomers: showCustomers,
+    showAllOrder: showAllOrder,
+    createOrder: createOrder,
+    showOrderInfo: showOrderInfo,
+    createOrderRow: createOrderRow,
+    sendOrder: sendOrder,
+    showAllAboutOrder: showAllAboutOrder
 };
 
 const mysql = require("promise-mysql");
@@ -74,7 +81,7 @@ async function showProduct() {
  * @async
  * @returns {RowDataPacket} Resultset from the query.
  */
-async function showProductonly() {
+async function showProductOnly() {
     let sql = `CALL show_productonly();`;
     let res;
 
@@ -85,7 +92,7 @@ async function showProductonly() {
 }
 
 /**
- * create a new account.
+ * create a new product
  *
  * @async
  * @param {string} id      An id of the account
@@ -152,6 +159,86 @@ async function deleteProduct(id) {
     let sql = `CALL delete_product(?);`;
 
     await db.query(sql, [id]);
+}
+
+/**
+ * Show all entries in the customer table.
+ *
+ * @async
+ * @returns {RowDataPacket} Resultset from the query.
+ */
+async function showCustomers() {
+    let sql = `CALL show_customer();`;
+    let res;
+
+    res = await db.query(sql);
+    // console.info(`SQL: ${sql} got ${res.length} rows.`);
+
+    return res[0];
+}
+
+/**
+ * Show all orders and order info.
+ *
+ * @async
+ * @returns {RowDataPacket} Resultset from the query.
+ */
+async function showAllOrder() {
+    let sql = `CALL show_all_order();`;
+    let res;
+
+    res = await db.query(sql);
+    // console.info(`SQL: ${sql} got ${res.length} rows.`);
+
+    return res[0];
+}
+
+/**
+ * create a new order
+ *
+ * @async
+ * @param {string} id      An id of the customer
+ *
+ * @returns {void}
+ */
+async function createOrder(body) {
+    let sql = `CALL create_order(?);`;
+
+    await db.query(sql, [body.customer_id]);
+}
+
+//show order showOrderInfo
+async function showOrderInfo(id) {
+    let sql = "CALL show_order_info(?);";
+    let res;
+
+    res = await db.query(sql, [id]);
+
+    return res[0];
+}
+
+//create a row in order_row table
+async function createOrderRow(body) {
+    let sql = "CALL create_order_row(?, ?, ?);";
+    let res;
+
+    res = await db.query(sql, [
+        body.order,
+        body.product,
+        body.items
+    ]);
+
+    return res[0];
+}
+
+//set order to beställd
+async function sendOrder(id) {
+    let sql = "CALL send_order(?);";
+    let res;
+
+    res = await db.query(sql, [id]);
+
+    return res[0];
 }
 // /////////////////////////////////////////////////////////////
 
@@ -228,3 +315,21 @@ async function removeFromShelf(id, shelf, stock) {
 
     console.info("Stock has been updated");
 }
+
+/**
+ * Show all orders and order info.
+ *
+ * @async
+ * @returns {RowDataPacket} Resultset from the query.
+ */
+async function showAllAboutOrder() {
+    console.info(`These are the orders and their status`);
+
+    let sql = `CALL show_all_about_order();`;
+
+    let res = await db.query(sql);
+
+    console.table(res[0]);
+}
+
+////////////////////

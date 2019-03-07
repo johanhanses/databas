@@ -1,5 +1,5 @@
 /**
- * terminal based program that moves 1.5 peng from adam to eva
+ * terminal based program
  *
  * @author Johan Hanses johv18
  *
@@ -74,6 +74,13 @@ async function handleInput(line) {
         case "invdel":
             await eshop.removeFromShelf(lineArray[1], lineArray[2], lineArray[3]);
             break;
+        case "order":
+            if (lineArray[1]) {
+                await eshop.searchInventory(lineArray[1]);
+            } else {
+                await eshop.showAllAboutOrder();
+            }
+            break;
         default:
             console.info('You have entered an invalid command, please try again or type menu');
             break;
@@ -94,6 +101,8 @@ function showMenu() {
         `inventory                     : View products and their location at the warehouse \n` +
         `inventory <str>                         : Search inventory \n` +
         `invadd <productid> <shelf> <number>     : Add to stock \n` +
-        `invdel <productid> <shelf> <number>     : remove from stock \n\n`
+        `invdel <productid> <shelf> <number>     : remove from stock \n` +
+        `order                         : View orders and their status \n` +
+        `order <search>                : Search orders \n\n`
     );
 }

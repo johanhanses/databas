@@ -1,0 +1,33 @@
+<%- include("header", {title: title}); %>
+
+
+<h1>Create a new order</h1>
+<pre><%#= JSON.stringify(res, null, 4) %></pre>
+
+<form method="post">
+    <label>Customer:</label>
+    <select name="customer_id">
+        <option value="0">Choose customer</option>
+        <% for (const customer of res) { %>
+            <option value="<%= customer.id %>"><%= customer.first_name + " " + customer.last_name %></option>
+
+        <% } %>
+    </select>
+
+
+
+        <!-- <input id="id" type="text" name="id" placeholder="Id">
+<br>
+        <label for "name">Name:</label>
+        <input id="description" type="text" name="description" placeholder="Article">
+<br>
+        <label for "balance">Balance:</label>
+        <input id="price" type="number" name="price" placeholder="Price"> -->
+<br><br>
+        <input type="submit" name="doit" value="Create">
+</form>
+<p>
+<a href="/eshop/order/">Back</a>
+</p>
+
+<%- include("footer"); %>

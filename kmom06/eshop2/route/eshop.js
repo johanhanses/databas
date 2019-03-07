@@ -42,7 +42,7 @@ router.get("/productonly", async (req, res) => {
         title: "Products | CdOff Online"
     };
 
-    data.res = await eshop.showProductonly();
+    data.res = await eshop.showProductOnly();
 
     res.render("eshop/productonly", data);
 });
@@ -96,7 +96,89 @@ router.post("/delete", urlencodedParser, async (req, res) => {
     await eshop.deleteProduct(req.body.id);
     res.redirect("/eshop/productonly");
 });
-///////////////////
+/////////////////////////////////////////////////
+router.get("/customer", async (req, res) => {
+    let data = {
+        title: "Customers | CdOff Online"
+    };
+
+    data.res = await eshop.showCustomers();
+
+    res.render("eshop/customer", data);
+});
+
+router.get("/order", async (req, res) => {
+    let data = {
+        title: "Orders | CdOff Online"
+    };
+
+    data.res = await eshop.showAllOrder();
+
+    res.render("eshop/order", data);
+});
+
+router.get("/createorder", async (req, res) => {
+    let data = {
+        title: "Create order | CdOff Online"
+    };
+
+    data.res = await eshop.showCustomers();
+
+    res.render("eshop/createorder", data);
+});
+
+router.post("/createorder", urlencodedParser, async (req, res) => {
+    //console.log(JSON.stringify(req.body, null, 4));
+
+    await eshop.createOrder(req.body);
+    res.redirect("/eshop/order");
+});
+
+router.get("/show/:id", urlencodedParser, async (req, res) => {
+    let id = req.params.id;
+    let data = {
+        title: "View order  | CdOff Online",
+        orderNo: id
+    };
+
+    data.res = await eshop.showOrderInfo(id);
+
+    res.render("eshop/show", data);
+});
+
+router.get("/createrow/:id", urlencodedParser, async (req, res) => {
+    let id = req.params.id;
+    let data = {
+        title: "View order  | CdOff Online",
+        orderNo: id
+    };
+
+    data.res = await eshop.showProduct();
+
+    res.render("eshop/createrow", data);
+});
+
+router.post("/createrow", urlencodedParser, async (req, res) => {
+    // console.log(JSON.stringify(req.body, null, 4));
+
+    await eshop.createOrderRow(req.body);
+    res.redirect("/eshop/show/" + req.body.order);
+});
+
+router.post("/show", urlencodedParser, async (req, res) => {
+    console.log(JSON.stringify(req.body, null, 4));
+
+    await eshop.sendOrder(req.body.id);
+    res.redirect("/eshop/order");
+});
+
+router.get("/about", (req, res) => {
+    let data = {
+        title: "Om | CdOff Online"
+    };
+
+    res.render("eshop/about", data);
+});
 
 
 
@@ -105,6 +187,16 @@ router.post("/delete", urlencodedParser, async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+/////////////////////////////////
 // router.get("/account/:id", async (req, res) => {
 //     let id = req.params.id;
 //     let data = {
@@ -116,11 +208,5 @@ router.post("/delete", urlencodedParser, async (req, res) => {
 //
 //     res.render("bank/account", data);
 // });
-
-
-
-
-
-
 
 module.exports = router;

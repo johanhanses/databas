@@ -1,0 +1,32 @@
+<%- include("header", {title: title}); %>
+
+
+<h1>Lägg till produkter till order med id: <%= orderNo %></h1>
+<pre><%#= JSON.stringify(res, null, 4) %></pre>
+
+<form method="post" action="/eshop/createrow/">
+    <!-- <label></label> -->
+    <input type="hidden" name="order" value="<%= orderNo %>">
+    <br>
+    <label>Produkt:</label>
+    <select name="product">
+        <option value="0">Välj produkt</option>
+        <% for (const product of res) { %>
+            <option value="<%= product.id %>"><%= product.article %></option>
+        <% } %>
+    </select>
+    <br>
+    <label>Antal:</label>
+    <input type="number" name="items">
+    <br>
+
+
+
+    <input type="submit" value="Lägg till produkt">
+</form>
+
+<p>
+<a href="/eshop/show/<%= orderNo %>">Tillbaka</a>
+</p>
+
+<%- include("footer"); %>
