@@ -23,7 +23,10 @@ CREATE TABLE `product`
     `description` VARCHAR(40),
     `price` INT,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    -- FOREIGN KEY (`id`) REFERENCES `producttocat`(`prod_id`),
+    -- FOREIGN KEY (`id`) REFERENCES `warehouse`(`product_id`),
+    KEY `index_description` (`description`)
 )
 ENGINE INNODB
 CHARSET utf8
@@ -147,7 +150,8 @@ CREATE TABLE `warehouse_shelf`
     `shelf_id` INT NOT NULL AUTO_INCREMENT,
     `description` VARCHAR(45),
 
-    PRIMARY KEY (`shelf_id`)
+    PRIMARY KEY (`shelf_id`),
+    UNIQUE KEY `description_unique` (`description`)
 )
 ENGINE INNODB
 CHARSET utf8
@@ -240,15 +244,14 @@ ON `product` FOR EACH ROW
 
 -- --------------------------------------------------------
 -- create view event_log
-DROP VIEW IF EXISTS `Vpick_list`;
-CREATE VIEW `Vpick_list`
+DROP VIEW IF EXISTS `v_picklist`;
+CREATE VIEW `v_picklist`
 AS
 SELECT
     `o`.`id` AS `order_number`,
     `or`.`id` AS `order_row`,
     `p`.`description` AS `description`,
     `or`.`items` AS `items_ordered`,
-    `ws`.`shelf_id` AS `shelf`,
     `ws`.`description` AS `shelf_location`,
     `w`.`items` AS `items_avaliable`
 FROM `order` AS `o`
@@ -260,7 +263,24 @@ FROM `order` AS `o`
         ON `p`.`id` = `w`.`product_id`
     INNER JOIN `warehouse_shelf` AS `ws`
         ON `w`.`shelf_id` = `ws`.`shelf_id`
-GROUP BY `order_row`, `ws`.`shelf_id`, `w`.`items`
+GROUP BY `order_row`, `ws`.`description`, `w`.`items`
 ;
 
-SELECT * FROM Vpick_list;
+-- SELECT * FROM v_picklist;
+
+-- create a View
+DROP VIEW IF EXISTS v_order;
+CREATE VIEW v_order
+AS
+SELECT
+    `o`.`id`,
+    `o`.`created`,
+    `o`.`customer_id`,
+    order_status(o.created, o.updated, o.deleted, o.ordered, o.shiped) AS `status`,
+    COUNT(`or`.`id`) AS `number_of_rows`
+FROM `order` AS `o`
+    LEFT JOIN `order_row` AS `or`
+        ON `o`.`id` = `or`.`order`
+GROUP BY `o`.`id`;
+
+-- SELECT * from v_order;

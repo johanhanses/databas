@@ -11,10 +11,11 @@ CREATE FUNCTION order_status(
     a_shiped DATETIME
 )
 RETURNS CHAR(10)
+DETERMINISTIC
 -- RETURNS VARCHAR(30)
 BEGIN
     IF a_shiped IS NOT NULL THEN
-        RETURN "levererad";
+        RETURN "skickad";
     ELSEIF a_deleted IS NOT NULL THEN
         RETURN "raderad";
     ELSEIF a_ordered IS NOT NULL THEN

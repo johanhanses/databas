@@ -76,10 +76,19 @@ async function handleInput(line) {
             break;
         case "order":
             if (lineArray[1]) {
-                await eshop.searchInventory(lineArray[1]);
+                await eshop.searchOrder(lineArray[1]);
             } else {
                 await eshop.showAllAboutOrder();
             }
+            break;
+        case "picklist":
+            await eshop.searchPicklist(lineArray[1]);
+            break;
+        case "ship":
+            await eshop.shipOrder(lineArray[1]);
+            break;
+        case "about":
+            eshop.about();
             break;
         default:
             console.info('You have entered an invalid command, please try again or type menu');
@@ -103,6 +112,9 @@ function showMenu() {
         `invadd <productid> <shelf> <number>     : Add to stock \n` +
         `invdel <productid> <shelf> <number>     : remove from stock \n` +
         `order                         : View orders and their status \n` +
-        `order <search>                : Search orders \n\n`
+        `order <search>                : Search orders on order or customer id\n` +
+        `picklist <orderid>            : View picklist for choosen order id\n` +
+        `ship <orderid>                : Set selected order status to "skickad"\n` +
+        `about                         : Who did this?\n\n`
     );
 }

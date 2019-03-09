@@ -23,7 +23,12 @@ module.exports = {
     showOrderInfo: showOrderInfo,
     createOrderRow: createOrderRow,
     sendOrder: sendOrder,
-    showAllAboutOrder: showAllAboutOrder
+    showAllAboutOrder: showAllAboutOrder,
+    searchOrder: searchOrder,
+    searchPicklist: searchPicklist,
+    shipOrder: shipOrder,
+    about: about
+
 };
 
 const mysql = require("promise-mysql");
@@ -43,6 +48,9 @@ let db;
     });
 })();
 
+// ////////////////////////////////////////////////////
+// functions for index.js
+// ////////////////////////////////////////////////////
 /**
  * Show all entries in the category table.
  *
@@ -241,6 +249,8 @@ async function sendOrder(id) {
     return res[0];
 }
 // /////////////////////////////////////////////////////////////
+// functions for cli.js
+// /////////////////////////////////////////////////////////////
 
 // view event_log table
 async function showLog(number) {
@@ -305,15 +315,12 @@ async function addToShelf(id, shelf, stock) {
 
 // remove from shelf
 async function removeFromShelf(id, shelf, stock) {
-    // let like = `%${str}%`;
-
-    // console.info(`Your search %${str}% returned:`);
-
     let sql = `CALL remove_from_shelf(?, ?, ?);`;
 
-    await db.query(sql, [id, shelf, stock]);
+    let res = await db.query(sql, [id, shelf, stock]);
 
-    console.info("Stock has been updated");
+    console.info(res[0]);
+    // console.info("Stock has been updated");
 }
 
 /**
@@ -331,5 +338,47 @@ async function showAllAboutOrder() {
 
     console.table(res[0]);
 }
+
+// search order
+async function searchOrder(id) {
+    let like = `${id}`;
+
+    console.info(`Your search ${id} on order id or customer id returned:`);
+
+    let sql = `CALL search_order(?);`;
+
+    let res = await db.query(sql, [like]);
+
+    console.table(res[0]);
+}
+
+// search picklist
+async function searchPicklist(id) {
+    let like = `${id}`;
+
+    console.info(`Your search ${id} on order id returned:`);
+
+    let sql = `CALL search_picklist(?);`;
+
+    let res = await db.query(sql, [like]);
+
+    console.table(res[0]);
+}
+
+//set order to skickad
+async function shipOrder(id) {
+    let sql = "CALL ship_order(?);";
+
+    let res = await db.query(sql, [id]);
+
+    // console.info(`Order no. ${id} has been shiped`);
+    console.info(res[1]);
+}
+
+// about
+function about() {
+    console.info(`Skapad av Johan Hanses(johv18)`);
+}
+
 
 ////////////////////

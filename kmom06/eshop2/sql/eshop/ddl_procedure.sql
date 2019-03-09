@@ -181,11 +181,12 @@ BEGIN
         LEFT JOIN `warehouse_shelf` AS `ws`
             ON `ws`.`shelf_id` = `w`.`shelf_id`
     GROUP BY `p`.`id`, `ws`.`description`, `w`.`items`
+    ORDER BY `p`.`id`
     ;
 END
 ;;
 DELIMITER ;
--- CALL show_inventory();
+CALL show_inventory();
 
 -- create a view of the previous inner joins
 DROP VIEW IF EXISTS v_inventory;
@@ -202,6 +203,8 @@ FROM `product` AS `p`
     LEFT JOIN `warehouse_shelf` AS `ws`
         ON `ws`.`shelf_id` = `w`.`shelf_id`
 GROUP BY `p`.`id`, `ws`.`description`, `w`.`items`
+ORDER BY `p`.`id`
+
 ;
 -- SELECT * FROM v_inventory;
 
@@ -224,6 +227,7 @@ BEGIN
         `id` LIKE a_search
         OR `article` LIKE a_search
         OR `shelf` LIKE a_search
+    -- ORDER BY `id`
     ;
 END
 ;;
@@ -289,14 +293,15 @@ CREATE PROCEDURE remove_from_shelf(
 BEGIN
     DECLARE current_stock INT;
     DECLARE b_shelf VARCHAR(5);
+    DECLARE a_status VARCHAR(60);
 
     START TRANSACTION;
 
     SET current_stock = (SELECT items FROM warehouse WHERE product_id = a_id);
-    SELECT current_stock;
+    -- SELECT current_stock;
 
     SET b_shelf = (SELECT description FROM warehouse_shelf WHERE description = a_shelf);
-    SELECT b_shelf;
+    -- SELECT b_shelf;
 
     IF current_stock > 0 THEN
         UPDATE warehouse
@@ -305,9 +310,14 @@ BEGIN
             WHERE
                 product_id = a_id
                 AND b_shelf = a_shelf;
+
+        SET a_status = CONCAT("Stock for product no. ", a_id, " has been updated");
+        SELECT a_status;
+
     ELSE
         ROLLBACK;
-        SELECT "Can't remove stock from this product";
+        SET a_status = "Can't remove stock from this product";
+        SELECT a_status;
 
     END IF;
 
@@ -423,21 +433,6 @@ DELIMITER ;
 
 -- CALL create_order_row(9, 9, 12);
 
-
--- create a View
-DROP VIEW IF EXISTS v_order;
-CREATE VIEW v_order
-AS
-SELECT
-    `o`.*,
-    order_status(o.created, o.updated, o.deleted, o.ordered, o.shiped) AS `status`,
-    COUNT(`or`.`id`) AS `number_of_rows`
-FROM `order` AS `o`
-    LEFT JOIN `order_row` AS `or`
-        ON `o`.`id` = `or`.`order`
-GROUP BY `o`.`id`;
-
--- SELECT * from v_order;
 --
 -- create procedure for setting a timestamp to ordered column in order table
 --
@@ -485,3 +480,90 @@ END
 DELIMITER ;
 
 -- CALL show_all_about_order();
+
+--
+-- Create procedure for select from v_order by search on id
+--
+DROP PROCEDURE IF EXISTS search_order;
+DELIMITER ;;
+CREATE PROCEDURE search_order(
+    a_search INT
+)
+BEGIN
+    SELECT
+        *
+        -- `id`,
+        -- `article`,
+        -- `shelf`,
+        -- `stock`
+    FROM `v_order`
+    WHERE
+        `id` = a_search
+        OR `customer_id` = a_search
+        -- OR `shelf` LIKE a_search
+    ;
+END
+;;
+DELIMITER ;
+
+-- CALL search_order(3);
+
+--
+-- Create procedure for select from ? v_picklist by search on order id
+--
+DROP PROCEDURE IF EXISTS search_picklist;
+DELIMITER ;;
+CREATE PROCEDURE search_picklist(
+    a_search INT
+)
+BEGIN
+    SELECT
+        *
+    FROM `v_picklist`
+    WHERE
+        `order_number` = a_search
+    GROUP BY
+        shelf_location,
+        order_row,
+        items_avaliable
+    ;
+END
+;;
+DELIMITER ;
+
+-- CALL search_picklist(2);
+
+DROP PROCEDURE IF EXISTS ship_order;
+DELIMITER ;;
+CREATE PROCEDURE ship_order(
+    a_id INT
+)
+BEGIN
+    DECLARE a_status VARCHAR(100);
+
+    START TRANSACTION;
+
+    SET a_status = (SELECT status FROM v_order WHERE id = a_id);
+    SELECT a_status;
+
+    IF a_status = "beställd" THEN
+    UPDATE `order`
+        SET `shiped` = CURRENT_TIMESTAMP
+    WHERE `id` = a_id;
+
+    SET a_status = CONCAT("Order no. ", a_id, " has been shiped");
+    SELECT a_status;
+
+    ELSE
+        SET a_status = "Can't ship an order that hasn't been set to status 'beställd'";
+        SELECT a_status;
+
+        -- SELECT "Can't ship an order that hasn't been set to status 'beställd'";
+    END IF;
+
+    COMMIT;
+END
+;;
+DELIMITER ;
+
+-- CALL ship_order(3);
