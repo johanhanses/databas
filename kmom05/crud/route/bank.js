@@ -68,10 +68,8 @@ router.get("/edit/:id", async (req, res) => {
 });
 
 router.post("/edit", urlencodedParser, async (req, res) => {
-
     await bank.editAccount(req.body.id, req.body.name, req.body.balance);
     res.redirect(`/bank/edit/${req.body.id}`);
-
 });
 
 router.get("/delete/:id", async (req, res) => {

@@ -75,7 +75,10 @@ footer {
     text-align: center;
 }
 
-input, textarea, select, button {
+input,
+textarea,
+select,
+button {
     box-sizing: border-box;
     width: 40%;
 }
@@ -83,7 +86,6 @@ input, textarea, select, button {
 input[type=text] {
     border: 2px solid rgba(200, 200, 0, 0.5);
     border-radius: 4px;
-
 }
 
 input[type=number] {
@@ -91,7 +93,9 @@ input[type=number] {
     border-radius: 4px;
 }
 
-input[type=button], input[type=submit], input[type=reset] {
+input[type=button],
+input[type=submit],
+input[type=reset] {
     background-color: rgba(200, 200, 0, 0.5);
     border: none;
     color: black;

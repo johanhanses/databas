@@ -107,7 +107,7 @@ async function createAccount(id, name, balance) {
 
     res = await db.query(sql, [id, name, balance]);
     console.log(res);
-    console.info
+
     console.info(`SQL: ${sql} got ${res.length} rows.`);
 }
 
@@ -158,8 +158,7 @@ async function editAccount(id, name, balance) {
  */
 async function deleteAccount(id) {
     let sql = `CALL delete_account(?);`;
-    let res;
 
-    res = await db.query(sql, [id]);
+    await db.query(sql, [id]);
     // console.info(`SQL: ${sql} got ${res.length} rows.`);
 }
