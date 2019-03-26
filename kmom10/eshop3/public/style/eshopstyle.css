@@ -1,7 +1,4 @@
-
 @import url('https://fonts.googleapis.com/css?family=Merriweather:300|Montserrat');
-
-
 html {
     /* background: fixed no-repeat url("../img/skog.png");
     background-size: cover; */
@@ -20,12 +17,13 @@ body {
     padding: 8px;
     width: 800px;
     overflow: auto;
-    text-align: center;
+    /* text-align: center; */
 }
 
 nav {
     background-color: rgba(200, 200, 0, 0.5);
     min-height: 3rem;
+    text-align: center;
 }
 
 p#message {
@@ -81,12 +79,14 @@ footer {
     text-align: center;
 }
 
-input,
+/* input,
 textarea,
 select,
-button {
+button  */
+form {
     box-sizing: border-box;
-    width: 40%;
+    margin: 0 auto;
+    width: 50%;
 }
 
 select {
@@ -105,6 +105,14 @@ input[type=number] {
     border: 2px solid rgba(200, 200, 0, 0.5);
     border-radius: 4px;
     padding: 0.5rem;
+}
+
+input[type=checkbox] {
+    /* border: 2px solid rgba(200, 200, 0, 0.5);  */
+    /* border-radius: 4px; */
+    /* padding: 0.5rem;
+    width: auto;
+    text-align: left; */
 }
 
 input[type=button],

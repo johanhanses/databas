@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:300|Montserrat');
+html {
+    /* background: fixed no-repeat url("../img/skog.png");
+    background-size: cover; */
+    background-color: rgba(300, 300, 300, 1);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 100%;
+    line-height: 1.5;
+    overflow-y: scroll;
+}
+
+body {
+    /* font-family: 'Montserrat', sans-serif;
+    font-size: 100%; */
+    line-height: 1.5;
+    margin: 8px auto;
+    padding: 8px;
+    width: 960px;
+    overflow: auto;
+    /* text-align: center; */
+}
+
+nav {
+    background-color: rgba(100, 200, 0, 0.5);
+    min-height: 3rem;
+    text-align: right;
+    padding: 0.25rem;
+}
+
+h1 {
+    font-family: 'Merriweather', serif;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: rgba(100, 200, 0, 0.5);
+}
+
+table,
+th,
+td {
+    padding: 0.5rem;
+    border: 1px solid black;
+}
+
+a {
+    /* text-decoration: none; */
+    color: #000;
+}
+
+footer {
+    clear: both;
+    text-align: right;
+    background-color: rgba(100, 200, 0, 0.5);
+    min-height: 3rem;
+    padding: 0.25rem;
+}
+
+.bild {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.container {
+    min-height: 20rem;
+    margin: 1rem;
+}
+
+/* input,
+textarea,
+select,
+button  */
+form {
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 50%;
+}
+
+select {
+    border: 2px solid rgba(100, 200, 0, 0.5);
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+input[type=text] {
+    border: 2px solid rgba(100, 200, 0, 0.5);
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+input[type=number] {
+    border: 2px solid rgba(100, 200, 0, 0.5);
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+input[type=checkbox] {
+    /* border: 2px solid rgba(100, 200, 0, 0.5);  */
+    /* border-radius: 4px; */
+    /* padding: 0.5rem;
+    width: auto;
+    text-align: left; */
+}
+
+input[type=button],
+input[type=submit],
+input[type=reset] {
+    background-color: rgba(100, 200, 0, 0.5);
+    border: none;
+    color: black;
+    padding: 0.5rem 1rem;
+    margin: 4px 2px;
+    cursor: pointer;
+}

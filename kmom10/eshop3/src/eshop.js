@@ -28,7 +28,6 @@ module.exports = {
     searchPicklist: searchPicklist,
     shipOrder: shipOrder,
     about: about
-
 };
 
 const mysql = require("promise-mysql");
@@ -62,7 +61,6 @@ async function showCategory() {
     let res;
 
     res = await db.query(sql);
-    console.info(`SQL: ${sql} got ${res.length} rows.`);
 
     return res[0];
 }
@@ -78,7 +76,6 @@ async function showProduct() {
     let res;
 
     res = await db.query(sql);
-    console.info(`SQL: ${sql} got ${res.length} rows.`);
 
     return res[0];
 }
@@ -94,7 +91,6 @@ async function showProductOnly() {
     let res;
 
     res = await db.query(sql);
-    console.info(`SQL: ${sql} got ${res.length} rows.`);
 
     return res[0];
 }
@@ -103,19 +99,19 @@ async function showProductOnly() {
  * create a new product
  *
  * @async
- * @param {string} id      An id of the account
- * @param {string} name    The name of the account holder
- * @param {string} balance Initial amount in the account.
+ * @param {string} id      An id of the product
+ * @param {string} description   The description of the product
+ * @param {string} price    the price for the product
+ * @param {string} cat_id the id for the category of the product
  *
  * @returns {void}
  */
-async function createProduct(id, description, price) {
-    let sql = `CALL create_product(?, ?, ?);`;
+async function createProduct(id, description, price, cid) {
+    let sql = `CALL create_product(?, ?, ?, ?);`;
     let res;
 
-    res = await db.query(sql, [id, description, price]);
-    console.log(res);
-    console.info(`SQL: ${sql} got ${res.length} rows.`);
+    res = await db.query(sql, [id, description, price, cid]);
+    console.log(res[1]);
 }
 
 /**

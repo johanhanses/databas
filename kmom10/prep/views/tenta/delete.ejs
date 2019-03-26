@@ -1,0 +1,29 @@
+<%- include("header", {title: title}); %>
+
+
+<h1>Delete a product</h1>
+<p>Delete product <%= product %> ?</p>
+
+<% res = res[0] %>
+<form method="post" action="/eshop/delete">
+    <!-- <fieldset> -->
+        <!-- <legend>Create account</legend> -->
+
+        <!-- <label for "id">Id:</label> -->
+        <input id="id" type="text" name="id" readonly value="<%= res.id %>">
+<br>
+        <!-- <label for "name">Name:</label> -->
+        <input id="description" type="text" name="description" readonly value="<%= res.description %>">
+<br>
+        <!-- <label for "balance">Balance:</label> -->
+        <input id="price" type="number" name="a_price"  readonly value="<%= res.price %>">
+<br>
+        <input type="submit" name="doit" value="Delete product">
+    <!-- </fieldset> -->
+</form>
+<p>
+<a href="/eshop/productonly/">Back</a>
+</p>
+
+
+<%- include("footer"); %>

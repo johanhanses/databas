@@ -1,5 +1,5 @@
 /**
- * Route for bank
+ * Route for eshop
  */
 "use strict";
 
@@ -17,7 +17,7 @@ router.get("/index", (req, res) => {
     res.render("eshop/index", data);
 });
 
-router.get("/category", async (req, res) => {
+router.get("/category", async(req, res) => {
     let data = {
         title: "Category | CdOff Online"
     };
@@ -27,7 +27,7 @@ router.get("/category", async (req, res) => {
     res.render("eshop/category", data);
 });
 
-router.get("/product", async (req, res) => {
+router.get("/product", async(req, res) => {
     let data = {
         title: "Products and categories | CdOff Online"
     };
@@ -37,7 +37,7 @@ router.get("/product", async (req, res) => {
     res.render("eshop/product", data);
 });
 
-router.get("/productonly", async (req, res) => {
+router.get("/productonly", async(req, res) => {
     let data = {
         title: "Products | CdOff Online"
     };
@@ -47,23 +47,32 @@ router.get("/productonly", async (req, res) => {
     res.render("eshop/productonly", data);
 });
 
-router.get("/create", async (req, res) => {
+router.get("/create", async(req, res) => {
     let data = {
         title: "Create product | CdOff Online"
     };
 
+    data.res = await eshop.showCategory();
+
     res.render("eshop/create", data);
 });
 
-router.post("/create", urlencodedParser, async (req, res) => {
+router.post("/create", urlencodedParser, /*async*/(req, res) => {
     // extract the data from the posted form
     //console.log(JSON.stringify(req.body, null, 4));
     // send data to a stored PROCEDURE
-    await eshop.createProduct(req.body.id, req.body.description, req.body.price);
-    res.redirect("/eshop/productonly");
+    console.log(req.body);
+    // await eshop.createProduct(
+    //     req.body
+    //     req.body.description,
+    //     req.body.price,
+    //     req.body.cid
+    // );
+
+    res.redirect("/eshop/product");
 });
 
-router.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id", async(req, res) => {
     let id = req.params.id;
     let data = {
         title: `Edit product ${id}` + ` | CdOff online`,
@@ -75,12 +84,12 @@ router.get("/edit/:id", async (req, res) => {
     res.render("eshop/edit", data);
 });
 
-router.post("/edit", urlencodedParser, async (req, res) => {
+router.post("/edit", urlencodedParser, async(req, res) => {
     await eshop.editProduct(req.body.id, req.body.description, req.body.price);
     res.redirect(`/eshop/edit/${req.body.id}`);
 });
 
-router.get("/delete/:id", async (req, res) => {
+router.get("/delete/:id", async(req, res) => {
     let id = req.params.id;
     let data = {
         title: `Delete product ${id}` + ` | CdOff Online`,
@@ -92,12 +101,12 @@ router.get("/delete/:id", async (req, res) => {
     res.render("eshop/delete", data);
 });
 
-router.post("/delete", urlencodedParser, async (req, res) => {
+router.post("/delete", urlencodedParser, async(req, res) => {
     await eshop.deleteProduct(req.body.id);
     res.redirect("/eshop/productonly");
 });
 /////////////////////////////////////////////////
-router.get("/customer", async (req, res) => {
+router.get("/customer", async(req, res) => {
     let data = {
         title: "Customers | CdOff Online"
     };
@@ -107,7 +116,7 @@ router.get("/customer", async (req, res) => {
     res.render("eshop/customer", data);
 });
 
-router.get("/order", async (req, res) => {
+router.get("/order", async(req, res) => {
     let data = {
         title: "Orders | CdOff Online"
     };
@@ -117,7 +126,7 @@ router.get("/order", async (req, res) => {
     res.render("eshop/order", data);
 });
 
-router.get("/createorder", async (req, res) => {
+router.get("/createorder", async(req, res) => {
     let data = {
         title: "Create order | CdOff Online"
     };
@@ -127,14 +136,14 @@ router.get("/createorder", async (req, res) => {
     res.render("eshop/createorder", data);
 });
 
-router.post("/createorder", urlencodedParser, async (req, res) => {
+router.post("/createorder", urlencodedParser, async(req, res) => {
     //console.log(JSON.stringify(req.body, null, 4));
 
     await eshop.createOrder(req.body);
     res.redirect("/eshop/order");
 });
 
-router.get("/show/:id", urlencodedParser, async (req, res) => {
+router.get("/show/:id", urlencodedParser, async(req, res) => {
     let id = req.params.id;
     let data = {
         title: "View order  | CdOff Online",
@@ -146,7 +155,7 @@ router.get("/show/:id", urlencodedParser, async (req, res) => {
     res.render("eshop/show", data);
 });
 
-router.get("/createrow/:id", urlencodedParser, async (req, res) => {
+router.get("/createrow/:id", urlencodedParser, async(req, res) => {
     let id = req.params.id;
     let data = {
         title: "View order  | CdOff Online",
@@ -158,14 +167,14 @@ router.get("/createrow/:id", urlencodedParser, async (req, res) => {
     res.render("eshop/createrow", data);
 });
 
-router.post("/createrow", urlencodedParser, async (req, res) => {
+router.post("/createrow", urlencodedParser, async(req, res) => {
     // console.log(JSON.stringify(req.body, null, 4));
 
     await eshop.createOrderRow(req.body);
     res.redirect("/eshop/show/" + req.body.order);
 });
 
-router.post("/show", urlencodedParser, async (req, res) => {
+router.post("/show", urlencodedParser, async(req, res) => {
     console.log(JSON.stringify(req.body, null, 4));
 
     await eshop.sendOrder(req.body.id);

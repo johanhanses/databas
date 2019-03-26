@@ -19,9 +19,10 @@ CREATE USER IF NOT EXISTS 'user'@'%'
 
 -- Give user "user" all rights on the database "eshop".
 GRANT ALL PRIVILEGES
-    ON eshop.*
-    TO 'user'@'%'
-    WITH GRANT OPTION;
+ON *.*
+TO 'user'@'%'
+WITH
+GRANT OPTION
 ;
 
 -- View rights.

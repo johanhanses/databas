@@ -1,0 +1,30 @@
+20190325080213
+.
+total 56
+drwxr-xr-x  3 Johan  staff    96 18 Mar 21:56 .dbwebb
+-rw-r--r--  1 Johan  staff  6375 25 Mar 07:57 INSTRUKTION_2018-03-21_upplevelse.md
+-rw-r--r--  1 Johan  staff  7468 25 Mar 07:57 INSTRUKTION_2018-05-31_det-stora-slaget-om-tartan.md
+-rw-r--r--  1 Johan  staff  7764 25 Mar 07:57 INSTRUKTION_2019-08-31_en-japansk-smakresa.md
+-rw-r--r--  1 Johan  staff  3852 25 Mar 07:57 README_FIRST.md
+./.dbwebb
+total 0
+drwxr-xr-x  5 Johan  staff  160 25 Mar 07:57 exam
+./.dbwebb/exam
+total 8
+drwxr-xr-x  7 Johan  staff  224 25 Mar 08:02 file
+-rw-r--r--  1 Johan  staff   35 25 Mar 07:57 id.md
+drwxr-xr-x  7 Johan  staff  224 25 Mar 08:02 receipt
+./.dbwebb/exam/file
+total 40
+-rw-r--r--  1 Johan  staff   844 18 Mar 21:56 20190318215602.txt
+-rw-r--r--  1 Johan  staff   976 19 Mar 12:27 20190319122737.txt
+-rw-r--r--  1 Johan  staff  1103 25 Mar 07:57 20190325075711.txt
+-rw-r--r--  1 Johan  staff  1234 25 Mar 08:01 20190325080131.txt
+-rw-r--r--  1 Johan  staff   681 25 Mar 08:02 20190325080213.txt
+./.dbwebb/exam/receipt
+total 40
+-rw-r--r--  1 Johan  staff  585 18 Mar 21:56 20190318205602.md
+-rw-r--r--@ 1 Johan  staff  585 19 Mar 12:27 20190319122736.md
+-rw-r--r--  1 Johan  staff  669 25 Mar 07:57 20190325065711.md
+-rw-r--r--  1 Johan  staff  751 25 Mar 08:02 20190325070213.md
+-rw-r--r--@ 1 Johan  staff  669 25 Mar 08:01 20190325080122.md

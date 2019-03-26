@@ -24,7 +24,7 @@ const rl = readline.createInterface({
  *
  * @returns void
  */
-(function () {
+(function() {
     rl.on("close", process.exit);
     rl.on("line", handleInput);
 
@@ -43,8 +43,6 @@ const rl = readline.createInterface({
 async function handleInput(line) {
     line = line.trim();
     let lineArray = line.split(" ");
-
-
 
     switch (lineArray[0]) {
         case "quit":
@@ -103,7 +101,7 @@ async function handleInput(line) {
 function showMenu() {
     console.info(
         `\nYou can choose from these commands:\n` +
-        `exit, quit                    : Exits the program\n`+
+        `exit, quit                    : Exits the program\n` +
         `menu, help                    : Shows this menu\n` +
         `log <number>                  : View desired entries in the log table\n` +
         `shelf                         : View which shelves exists at the warehouse \n` +
